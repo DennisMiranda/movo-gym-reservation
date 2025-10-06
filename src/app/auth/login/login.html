@@ -1,0 +1,68 @@
+<div class="text-white flex-1 h-3/5 lg:h-full justify-center">
+  <form (submit)="onSubmit($event)" class="space-y-6">
+    <div class="space-y-2">
+      <label
+        class="block text-foreground font-semibold uppercase text-xs tracking-wider"
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        [value]="email()"
+        (input)="email.set($any($event.target).value)"
+        class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+        placeholder="Enter your email"
+        required
+      />
+    </div>
+    <div class="space-y-2">
+      <label
+        class="block text-foreground font-semibold uppercase text-xs tracking-wider"
+        for="password"
+      >
+        Password
+      </label>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        [value]="password()"
+        (input)="password.set($any($event.target).value)"
+        class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+        placeholder="Enter your password"
+        required
+      />
+    </div>
+
+    <p class="text-white/80 text-sm">{{ errorMessage() }}</p>
+
+    <button
+      type="submit"
+      [disabled]="loading()"
+      class="w-full flex justify-center bg-primary hover:bg-primary/80 p-2 font-semibold"
+    >
+      {{ loading() ? 'Signing in...' : 'Sign In' }}
+    </button>
+
+    <div class="flex items-center gap-2 justify-center">
+      <span class="text-white pb-1">or</span>
+    </div>
+
+    <button
+      type="button"
+      (click)="onGoogleSignIn()"
+      [disabled]="loading()"
+      class="w-full text-primary flex justify-center items-center font-semibold p-2 px-4 border border-primary"
+    >
+      <span>{{ googleLoading() ? 'Signing in...' : 'Sign in with Google' }}</span>
+    </button>
+
+    <p class="text-center mt-4">
+      Don't have an account?
+      <a routerLink="/register" class="font-semibold text-primary hover:underline">Register</a>
+    </p>
+  </form>
+</div>

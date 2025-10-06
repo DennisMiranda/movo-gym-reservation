@@ -1,0 +1,115 @@
+@let user = currentUser();
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border"
+>
+  <div class="px-4 w-full">
+    <div class="flex items-center justify-between h-20 w-full">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center">
+        <h1 class="text-3xl font-black tracking-tight">MOVO</h1>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a
+          routerLink="/"
+          routerLinkActive="text-primary"
+          class="text-sm font-medium hover:text-primary"
+          >HOME</a
+        >
+        <a
+          routerLink="/classes"
+          routerLinkActive="text-primary"
+          class="text-sm font-medium hover:text-primary"
+          >CLASSES</a
+        >
+
+        {{ currentUser | json }}
+
+        @if (user) {
+
+        <div class="relative inline-block text-left">
+          <!-- Botón que abre el menú -->
+          <button
+            (click)="toggleMenu()"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded bg-accent text-white font-medium hover:bg-accent/80"
+          >
+            HI, {{ user.displayName | uppercase }}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+          @if (menuOpen) {
+          <div
+            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+          >
+            <a
+              routerLink="/my-reservations"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              My bookings
+            </a>
+            <button
+              (click)="logout()"
+              class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Logout
+            </button>
+          </div>
+          }
+        </div>
+        } @else {
+        <a routerLink="/login"
+          ><button class="btn-accent px-4 py-1 rounded">Login / Sign up</button></a
+        >
+        }
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+        @if (!mobileMenuOpen) { &#9776; } @if (mobileMenuOpen) { &times; }
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (mobileMenuOpen) {
+    <nav class="md:hidden py-4 border-t border-gray-200">
+      <div class="flex flex-col gap-4">
+        <a routerLink="/" routerLinkActive="text-primary" (click)="toggleMobileMenu()">HOME</a>
+        <a routerLink="/classes" routerLinkActive="text-primary" (click)="toggleMobileMenu()"
+          >CLASSES</a
+        >
+
+        @if (user) {
+        <button
+          (click)="toggleUserMobileMenu()"
+          class="w-full flex justify-between items-center py-1"
+        >
+          HI, {{ user.displayName | uppercase }}
+          <span>{{ userMobileMenuOpen ? '-' : '+' }}</span>
+        </button>
+
+        <!-- User Submenu -->
+        @if (userMobileMenuOpen) {
+        <div class="flex flex-col gap-2 mt-2 ml-2">
+          <a routerLink="/my-reservations" (click)="toggleMobileMenu()">
+            <button class="w-full border px-4 py-1 rounded">My bookings</button>
+          </a>
+          <button (click)="logout()" class="w-full border px-4 py-1 rounded">Logout</button>
+        </div>
+        } } @else {
+        <a routerLink="/login" (click)="toggleMobileMenu()"
+          ><button class="w-full border px-4 py-1 rounded">Login / Sign up</button></a
+        >
+        }
+      </div>
+    </nav>
+    }
+  </div>
+</header>

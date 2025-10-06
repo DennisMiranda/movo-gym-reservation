@@ -1,0 +1,96 @@
+<!-- Form -->
+<form (submit)="onSubmit($event)" class="space-y-6">
+  <div class="space-y-2">
+    <label class="block text-foreground font-semibold uppercase text-xs tracking-wider" for="name">
+      Name
+    </label>
+    <input
+      id="name"
+      type="text"
+      name="user_name"
+      class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+      placeholder="Enter your name"
+      [value]="name()"
+      (input)="name.set($any($event.target).value)"
+      required
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label class="block text-foreground font-semibold uppercase text-xs tracking-wider" for="email">
+      Email
+    </label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+      placeholder="Enter your email"
+      [value]="email()"
+      (input)="email.set($any($event.target).value)"
+      required
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label
+      class="block text-foreground font-semibold uppercase text-xs tracking-wider"
+      for="password"
+    >
+      Password
+    </label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+      placeholder="Enter your password"
+      [value]="password()"
+      (input)="password.set($any($event.target).value)"
+      required
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label
+      class="block text-foreground font-semibold uppercase text-xs tracking-wider"
+      for="password"
+    >
+      Confirm Password
+    </label>
+    <input
+      id="confirm_password"
+      type="password"
+      name="confirm_password"
+      class="w-full bg-secondary border border-border text-foreground rounded px-3 py-2"
+      placeholder="Enter your password"
+      [value]="password()"
+      (input)="password.set($any($event.target).value)"
+      required
+    />
+    <p id="password-error" class="text-xs text-white/80"></p>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full py-2 bg-primary text-white font-semibold rounded hover:bg-primary/80 transition"
+  >
+    Create Account
+  </button>
+
+  <p class="text-center">or</p>
+
+  <button
+    type="button"
+    class="w-full py-2 border border-primary text-primary font-semibold rounded hover:bg-primary/80 transition"
+  >
+    Register with Google
+  </button>
+</form>
+
+<div class="text-center mt-6">
+  Already have an account?
+  <a routerLink="/login">
+    <span class="text-primary font-semibold hover:underline">Login </span>
+  </a>
+</div>
