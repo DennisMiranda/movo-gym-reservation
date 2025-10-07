@@ -4,6 +4,10 @@ import { Hero } from './hero/hero';
 import { AuthLayout } from './auth/auth-layout/auth-layout';
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
+import { AdminLayout } from './admin/admin-layout/admin-layout';
+import { Dashboard } from './admin/dashboard/dashboard';
+import { authGuard } from './auth/auth-guard/auth-guard';
+import { adminGuard } from './admin/admin-guard/admin-guard-guard';
 
 export const routes: Routes = [
   {
@@ -24,5 +28,11 @@ export const routes: Routes = [
       { path: 'login', component: Login },
       { path: 'register', component: Register },
     ],
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard, adminGuard],
+    component: AdminLayout,
+    children: [{ path: 'dashboard', component: Dashboard }],
   },
 ];

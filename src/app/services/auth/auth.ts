@@ -10,11 +10,18 @@ import firebase from 'firebase/compat/app';
 // https://github.com/angular/angularfire/issues/3435
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+const ROLE = {
+  user: 'user',
+  admin: 'admin',
+} as const;
+
+type Role = (typeof ROLE)[keyof typeof ROLE];
+
 export interface User {
   uid: string;
   email: string | null;
   displayName: string | null;
-  role: 'user' | 'admin';
+  role: Role;
   createdAt?: Date;
   lastLogin?: Date;
   provider?: 'email' | 'google';
@@ -33,7 +40,6 @@ export class AuthService {
   constructor() {
     // Escuchar cambios de autenticación
     this.afAuth.authState.subscribe(async (firebaseUser) => {
-      console.log(firebaseUser);
       if (firebaseUser) {
         const user = await this.getUserData(firebaseUser);
         this._currentUser.next(user);
@@ -41,6 +47,14 @@ export class AuthService {
         this._currentUser.next(null);
       }
     });
+  }
+
+  isAuthenticated() {
+    return !!this.currentUser;
+  }
+
+  hasAdminRole() {
+    return this.currentUser?.role === ROLE.admin;
   }
 
   // Obtener rol desde Firestore
@@ -82,7 +96,6 @@ export class AuthService {
     return from(
       this.afAuth.createUserWithEmailAndPassword(email, password).then(async (cred) => {
         const user = cred.user;
-        console.log(user);
         if (!user) throw new Error('User creation failed');
         await setDoc(doc(this.firestore, `users/${user.uid}`), {
           uid: user.uid,

@@ -23,7 +23,7 @@ export class Login implements OnDestroy {
     this.authService.currentUser$.subscribe((user) => {
       if (user) {
         if (user.role === 'admin') {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin/dashboard']);
         } else {
           this.router.navigate(['/']);
         }
