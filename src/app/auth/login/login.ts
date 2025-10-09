@@ -1,4 +1,4 @@
-import { Component, OnDestroy, signal } from '@angular/core';
+import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { Subscription } from 'rxjs';
@@ -12,24 +12,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login implements OnDestroy {
+  auth = inject(AuthService);
+  router = inject(Router);
+
   email = signal('');
   password = signal('');
   errorMessage = signal('');
   loading = signal(false);
   googleLoading = signal(false);
   subscriptions: Subscription = new Subscription();
-
-  constructor(private authService: AuthService, private router: Router) {
-    this.authService.currentUser$.subscribe((user) => {
-      if (user) {
-        if (user.role === 'admin') {
-          this.router.navigate(['/admin/dashboard']);
-        } else {
-          this.router.navigate(['/']);
-        }
-      }
-    });
-  }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -40,9 +31,16 @@ export class Login implements OnDestroy {
     this.errorMessage.set('');
     this.loading.set(true);
 
-    const subscription = this.authService.login(this.email(), this.password()).subscribe({
-      next: () => {
+    const subscription = this.auth.login(this.email(), this.password()).subscribe({
+      next: (user) => {
         this.loading.set(false);
+        if (user) {
+          if (user.role === 'admin') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/']);
+          }
+        }
       },
       error: (err) => {
         this.errorMessage.set('Something went wrong. Please try again.');

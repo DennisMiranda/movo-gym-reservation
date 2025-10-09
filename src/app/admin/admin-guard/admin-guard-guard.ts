@@ -5,5 +5,5 @@ import { AuthService } from '../../services/auth/auth';
 export const adminGuard: CanActivateChildFn = (childRoute, state) => {
   const authService = inject(AuthService);
 
-  return authService.hasAdminRole();
+  return authService.isAdmin();
 };

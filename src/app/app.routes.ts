@@ -33,6 +33,24 @@ export const routes: Routes = [
     path: 'admin',
     canActivate: [authGuard, adminGuard],
     component: AdminLayout,
-    children: [{ path: 'dashboard', component: Dashboard }],
+    children: [
+      { path: '', component: Dashboard },
+      // {
+      //   path: 'classes',
+      //   loadComponent: () =>
+      //     import('./pages/classes/classes.component').then((m) => m.ClassesComponent),
+      // },
+      // {
+      //   path: 'reservations',
+      //   loadComponent: () =>
+      //     import('./pages/reservations/reservations.component').then(
+      //       (m) => m.ReservationsComponent
+      //     ),
+      // },
+      // {
+      //   path: 'users',
+      //   loadComponent: () => import('./pages/users/users.component').then((m) => m.UsersComponent),
+      // },
+    ],
   },
 ];
