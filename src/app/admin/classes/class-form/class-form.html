@@ -1,0 +1,101 @@
+<div
+  class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+>
+  <div class="bg-card border border-border rounded-lg w-full max-w-lg p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-heading text-foreground">
+        {{ classData ? 'Edit Class' : 'Add New Class' }}
+      </h2>
+      <button
+        (click)="handleClose()"
+        class="p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form #classForm="ngForm" (ngSubmit)="handleSubmit(classForm)" class="space-y-4">
+      <!-- Class Name -->
+      <div>
+        <label for="name" class="block text-foreground font-medium">Class Name</label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          [value]="name()"
+          (input)="name.set($any($event.target).value)"
+          required
+          placeholder="e.g., HIIT Bootcamp"
+          class="mt-1 w-full border border-border rounded-md bg-background px-3 py-2"
+        />
+      </div>
+
+      <!-- Trainer -->
+      <div>
+        <label for="trainer" class="block text-foreground font-medium">Trainer</label>
+        <input
+          id="trainer"
+          type="text"
+          name="trainer"
+          [value]="trainer()"
+          (input)="trainer.set($any($event.target).value)"
+          required
+          placeholder="e.g., Sarah Johnson"
+          class="mt-1 w-full border border-border rounded-md bg-background px-3 py-2"
+        />
+      </div>
+
+      <!-- Schedule -->
+      <div>
+        <label for="schedule" class="block text-foreground font-medium">Schedule</label>
+        <input
+          id="schedule"
+          type="text"
+          name="schedule"
+          [value]="schedule()"
+          (input)="schedule.set($any($event.target).value)"
+          required
+          placeholder="e.g., Mon, Wed, Fri - 6:00 AM"
+          class="mt-1 w-full border border-border rounded-md bg-background px-3 py-2"
+        />
+      </div>
+
+      <!-- Spots -->
+      <div>
+        <label for="spots" class="block text-foreground font-medium">Available Spots</label>
+        <input
+          id="spots"
+          type="number"
+          name="spots"
+          [value]="spots()"
+          (input)="spots.set($any($event.target).value)"
+          min="1"
+          required
+          placeholder="e.g., 15"
+          class="mt-1 w-full border border-border rounded-md bg-background px-3 py-2"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex gap-3 pt-4">
+        <button
+          type="button"
+          (click)="handleClose()"
+          class="flex-1 border border-border rounded-md py-2 hover:bg-muted transition-colors"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="!classForm.valid"
+          class="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2"
+        >
+          {{ classData ? 'Update Class' : 'Create Class' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

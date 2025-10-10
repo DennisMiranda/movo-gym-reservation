@@ -15,11 +15,13 @@ export class Navbar {
 
   menuOpen = signal(false);
 
+  private readonly pathPrefix = '/admin';
+
   navItems = [
-    { path: '/', icon: 'layout-dashboard', label: 'Dashboard' },
-    { path: '/classes', icon: 'dumbbell', label: 'Classes' },
-    { path: '/reservations', icon: 'calendar', label: 'Reservations' },
-    { path: '/users', icon: 'users', label: 'Users' },
+    { path: this.pathPrefix + '/', icon: 'layout-dashboard', label: 'Dashboard' },
+    { path: this.pathPrefix + '/classes', icon: 'dumbbell', label: 'Classes' },
+    { path: this.pathPrefix + '/reservations', icon: 'calendar', label: 'Reservations' },
+    { path: this.pathPrefix + '/users', icon: 'users', label: 'Users' },
   ];
 
   mobileMenuOpen = signal(false);

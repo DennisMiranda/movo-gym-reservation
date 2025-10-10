@@ -35,11 +35,10 @@ export const routes: Routes = [
     component: AdminLayout,
     children: [
       { path: '', component: Dashboard },
-      // {
-      //   path: 'classes',
-      //   loadComponent: () =>
-      //     import('./pages/classes/classes.component').then((m) => m.ClassesComponent),
-      // },
+      {
+        path: 'classes',
+        loadComponent: () => import('./admin/classes/classes').then((m) => m.Classes),
+      },
       // {
       //   path: 'reservations',
       //   loadComponent: () =>

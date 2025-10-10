@@ -1,3 +1,49 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Define dark theme with Movo brand colors using Material 3
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$orange-palette,
+    tertiary: mat.$violet-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Apply dark theme
+html {
+  @include mat.all-component-themes($dark-theme);
+  
+  // Override Material theme with Movo brand colors
+  --mat-app-background-color: hsl(0 0% 5%);
+  --mat-app-text-color: hsl(0 0% 96%);
+  --mat-app-surface-color: hsl(0 0% 8%);
+  
+  // Material table specific overrides
+  .mat-mdc-table {
+    background-color: hsl(0 0% 8%);
+    color: hsl(0 0% 96%);
+  }
+  
+  .mat-mdc-header-cell {
+    background-color: hsl(0 0% 12%);
+    color: hsl(0 0% 96%);
+    font-weight: 600;
+  }
+  
+  .mat-mdc-row:hover {
+    background-color: hsl(0 0% 12%);
+  }
+  
+  .mat-mdc-cell {
+    border-bottom-color: hsl(0 0% 20%);
+  }
+}
+
 @import "tailwindcss";
 
 @theme {
@@ -21,7 +67,7 @@
   --color-muted-foreground: hsl(0 0% 65%);
 
   --color-accent: hsl(16 100% 60%);
-  --color-accent-foreground: hsl(0 0% 5%);
+  --color-accent-foreground: hsl(0 0% 96%);
 
   --color-destructive: hsl(0 84.2% 60.2%);
   --color-destructive-foreground: hsl(0 0% 96%);
@@ -104,3 +150,6 @@ main {
       width: max-content;
     } */
   }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
