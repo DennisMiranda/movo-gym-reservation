@@ -1,0 +1,22 @@
+<section class="pt-8 pb-12">
+  <div class="px-4 w-full">
+    <!-- Header -->
+    <div class="max-w-3xl mb-16">
+      <span class="text-primary text-sm font-bold uppercase mb-4 block"> Available Classes </span>
+      <h2 class="text-5xl md:text-6xl font-extrabold mb-6">
+        CHOOSE YOUR <br />
+        <span class="text-primary">JOURNEY</span>
+      </h2>
+      <p class="text-xl text-gray-500">
+        Select from our premium class offerings and reserve your spot today.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid gap-6">
+      @for (session of sessions(); track session.id) {
+      <app-class-session-card [data]="session"></app-class-session-card>
+      }
+    </div>
+  </div>
+</section>

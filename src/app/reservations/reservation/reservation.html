@@ -1,0 +1,27 @@
+@let reservation = data();
+<div
+  class="bg-gray-500/10 border border-gray-700/20 p-6 rounded-sm hover:bg-gray-500/20 transition"
+>
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="flex-1">
+      <h3 class="text-2xl font-bold mb-6">{{ reservation.title }}</h3>
+      <div class="flex flex-wrap gap-4 text-sm text-gray-400">
+        <div class="flex items-center gap-2">
+          <mat-icon class="text-primary">calendar_today</mat-icon>
+          <span>{{ reservation.date.toDate() | date : 'EEEE, d MMMM, yyyy' }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <mat-icon class="text-primary">access_time</mat-icon>
+          <span>{{ reservation.startHour }} - {{ reservation.endHour }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <mat-icon class="text-primary">person</mat-icon>
+          <span>{{ reservation.trainer }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center">
+      <button matButton="outlined" (click)="cancelReservation()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,19 @@
-import { inject, Injectable, signal, computed } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject, from, map, take } from 'rxjs';
 import { GoogleAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
+import { from } from 'rxjs';
 // Use methods from firebase/firestore to avoid:
 // Expected first argument to collection() to be a CollectionReference,
 // a DocumentReference or FirebaseFirestore
 // https://github.com/angular/angularfire/issues/3435
+import { Router } from '@angular/router';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-
+import { Subscription } from 'rxjs';
+import { ClassSessionsService } from '../class-sessions/class-sessions';
+import { ClassesService } from '../classes/classes';
+import { ReservationsService } from '../reservations/reservations';
 const ROLE = {
   user: 'user',
   admin: 'admin',
@@ -33,6 +37,10 @@ export interface User {
 export class AuthService {
   private afAuth = inject(AngularFireAuth);
   private firestore = inject(Firestore);
+  private router = inject(Router);
+  private classesService = inject(ClassesService);
+  private classSessionsService = inject(ClassSessionsService);
+  private reservationsService = inject(ReservationsService);
 
   // User signal
   private userSignal = signal<User | null>(this.loadUserFromStorage());
@@ -40,14 +48,39 @@ export class AuthService {
   isAdmin = computed(() => this.userSignal()?.role === 'admin');
   isLoggedIn = computed(() => !!this.userSignal());
 
+  subscriptions = new Subscription();
+
   constructor() {
     // Firebase Auth State
     this.afAuth.authState.subscribe(async (firebaseUser) => {
       if (firebaseUser) {
         const user = await this.getUserData(firebaseUser);
         this.setUser(user);
+        this.subscriptions.add(
+          this.reservationsService.getUserReservations(user.uid).subscribe((reservations) => {
+            this.reservationsService.setReservations(reservations);
+          })
+        );
+
+        const from = new Date();
+        const to = new Date();
+        from.setDate(from.getDate() - from.getDay());
+        to.setDate(from.getDate() + 6);
+        this.subscriptions.add(
+          this.classSessionsService.getClassSessionsByWeek(from, to).subscribe((sessions) => {
+            this.classSessionsService.setClassSessions(sessions);
+          })
+        );
+
+        this.subscriptions.add(
+          this.classesService.getClasses().subscribe((classes) => {
+            this.classesService.setClasses(classes);
+          })
+        );
       } else {
+        this.reservationsService.setReservations([]);
         this.clearUser();
+        this.subscriptions.unsubscribe();
       }
     });
   }
@@ -172,5 +205,9 @@ export class AuthService {
         role: 'user',
       };
     }
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['/login']);
   }
 }

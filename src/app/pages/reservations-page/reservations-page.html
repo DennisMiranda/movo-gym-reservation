@@ -1,0 +1,29 @@
+<div class="min-h-screen pt-28 pb-16 bg-black/20 text-white">
+  <div class="px-8">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-3xl font-bold mb-2">YOUR <span class="text-primary">RESERVATIONS</span></h2>
+        <p class="text-gray-200">Manage your upcoming classes</p>
+      </div>
+      <a routerLink="/classes" matButton="filled"> Book New Class </a>
+    </div>
+
+    @if (reservations$ | async; as reservations) { @if (reservations.length > 0) {
+    <div class="grid gap-4">
+      @for (reservation of reservations; track reservation.id) {
+      <app-reservation [data]="reservation"></app-reservation>
+      }
+    </div>
+    } @else {
+    <div class="bg-gray-500/10 border border-gray-700/20 p-12 text-center rounded">
+      <p class="text-gray-200 mb-4">You don't have any upcoming reservations.</p>
+      <a routerLink="/classes" matButton="outlined"> Browse Classes </a>
+    </div>
+    } } @else {
+    <div class="flex justify-center py-12">
+      <mat-icon class="animate-spin text-primary">refresh</mat-icon>
+      <span class="ml-2">Loading your reservations...</span>
+    </div>
+    }
+  </div>
+</div>

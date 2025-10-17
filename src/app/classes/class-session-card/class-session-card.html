@@ -1,0 +1,72 @@
+@let currentData = data(); @if (currentData) {
+<div class="bg-gray-500/10 overflow-hidden transition rounded-sm">
+  <div class="flex flex-col md:flex-row">
+    <!-- Image Container -->
+    <div class="px-6 pt-6 md:w-1/3">
+      <img class="w-full h-60 object-cover" [src]="currentData.image" [alt]="currentData.title" />
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col px-6 pt-6 md:w-2/3 justify-between">
+      <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+        <div class="flex-1">
+          <h3 class="text-2xl font-bold mb-2">{{ currentData.title }}</h3>
+          <div class="mb-3 pt-2">
+            <p class="text-gray-400" [class.line-clamp-3]="!showDescription()">
+              {{ currentData.description }}
+            </p>
+            @if ((currentData?.description?.length ?? 0) > 20) {
+            <button
+              (click)="toggleDescription()"
+              class="text-primary hover:underline text-xs mt-1 focus:outline-none"
+            >
+              {{ showDescription() ? 'Show less' : 'Show more' }}
+            </button>
+            }
+          </div>
+
+          <div class="flex flex-wrap justify-between gap-4 text-sm pt-2">
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-primary">person</mat-icon>
+              <span>
+                Trainer:
+                <span class="font-medium text-white">{{ currentData.trainer }}</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-primary">calendar_today</mat-icon>
+              <span class="font-medium text-white">{{ currentData.days | weekDays }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-primary">schedule</mat-icon>
+              <span class="font-medium text-white"
+                >{{ currentData.startHour }} - {{ currentData.endHour }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Button -->
+      <button matButton="outlined" (click)="toggleClass(currentData.id!)" class="w-full">
+        @if (expandedClassId() === currentData.id) {
+        <span class="flex items-center gap-2">
+          <mat-icon>expand_less</mat-icon>
+          <span>Hide Schedule</span>
+        </span>
+        } @else {
+        <span class="flex items-center gap-2">
+          <mat-icon>expand_more</mat-icon>
+          <span>View Schedule</span>
+        </span>
+        }
+      </button>
+    </div>
+  </div>
+  <!-- Schedule -->
+  <div class="px-6 pb-6">
+    @if (expandedClassId() === currentData.id) {
+    <app-class-session-events [session]="currentData"></app-class-session-events>
+    }
+  </div>
+</div>
+}
