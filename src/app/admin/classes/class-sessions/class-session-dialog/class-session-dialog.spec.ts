@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClassesTable } from './classes-table';
+import { ClassSessionDialog } from './class-session-dialog';
 
-describe('ClassesTable', () => {
-  let component: ClassesTable;
-  let fixture: ComponentFixture<ClassesTable>;
+describe('ClassSessionDialog', () => {
+  let component: ClassSessionDialog;
+  let fixture: ComponentFixture<ClassSessionDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ClassesTable]
+      imports: [ClassSessionDialog]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ClassesTable);
+    fixture = TestBed.createComponent(ClassSessionDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

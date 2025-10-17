@@ -1,0 +1,131 @@
+<div
+  class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+>
+  <div class="bg-card border border-border rounded-lg w-full max-w-lg p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-heading text-foreground">
+        {{ classSessionData?.id ? 'Edit Class Session' : 'Add New Class Session' }}
+      </h2>
+    </div>
+
+    <!-- Form -->
+    <form #classForm="ngForm" (ngSubmit)="handleSubmit(classForm)" class="flex flex-col space-y-4">
+      <!-- Class Title -->
+      <span class="text-muted-foreground"
+        >{{ classSessionData?.id ? 'Edit Class Session' : 'Add New Class Session' }}
+      </span>
+
+      <!-- Trainer -->
+      <mat-form-field appearance="outline" class="w-full !rounded-none">
+        <mat-label>Trainer</mat-label>
+        <input
+          matInput
+          id="trainer"
+          type="text"
+          name="trainer"
+          [value]="trainer()"
+          (input)="trainer.set($any($event.target).value)"
+          required
+          placeholder="e.g., Sarah Johnson"
+        />
+      </mat-form-field>
+
+      <!-- Schedule -->
+
+      <mat-form-field appearance="outline" class="w-full !rounded-none">
+        <mat-label>Schedule</mat-label>
+        <mat-select [(value)]="selectedDays" multiple [disabled]="classSessionData?.id">
+          @for (day of days; track day) {
+          <mat-option [value]="$index">{{ $index }}-{{ day }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="flex gap-4">
+        <!-- Time range -->
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>Start</mat-label>
+          <mat-select [(value)]="startHour">
+            @for (hour of availableHours; track hour) {
+            <mat-option [value]="hour">{{ hour }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <!-- End hour -->
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>End</mat-label>
+          <mat-select [(value)]="endHour" [disabled]="!startHour()">
+            @for (hour of availableHours; track hour) {
+            <mat-option [value]="hour">{{ hour }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Spots -->
+      <mat-form-field appearance="outline">
+        <mat-label>Available Spots</mat-label>
+        <input
+          matInput
+          id="spots"
+          type="number"
+          name="spots"
+          [value]="spots()"
+          (input)="spots.set($any($event.target).value)"
+          min="1"
+          required
+          placeholder="e.g., 15"
+        />
+      </mat-form-field>
+
+      <!-- Date start -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date Start</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [value]="dateStart()"
+          (dateChange)="onStartDateChange($event.value)"
+          required
+          [disabled]="classSessionData?.id"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Date end -->
+      <mat-form-field appearance="outline">
+        <mat-label>Date End</mat-label>
+        <input
+          matInput
+          [matDatepicker]="finishDatePicker"
+          [value]="dateFinish()"
+          (dateChange)="onEndDateChange($event.value)"
+          [min]="dateStart()"
+          [disabled]="!dateStart() || classSessionData?.id"
+          required
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="finishDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #finishDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Buttons -->
+      <div class="flex gap-3 pt-4">
+        <button matButton="outlined" type="button" (click)="handleClose()" class="flex-1">
+          Cancel
+        </button>
+
+        <button
+          matButton="filled"
+          type="submit"
+          [disabled]="!classForm.valid || !selectedDays().length || !startHour() || !endHour()"
+          class="flex-1"
+        >
+          {{ classSessionData?.id ? 'Update' : 'Create' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

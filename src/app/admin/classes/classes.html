@@ -4,9 +4,11 @@
       <h1 class="text-3xl font-heading text-foreground mb-2">Manage Classes</h1>
       <p class="text-muted-foreground">Create and manage your gym classes</p>
     </div>
-    <button class="px-4 py-2 rounded bg-accent text-white font-medium hover:bg-accent/80">
-      + Add Class
-    </button>
+    <button matButton="filled" (click)="openDialog()"><mat-icon>add</mat-icon>Add Class</button>
   </div>
-  <app-classes-table></app-classes-table>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (classData of classes$ | async; track classData.id) {
+    <app-class-card [classData]="classData"></app-class-card>
+    }
+  </div>
 </div>

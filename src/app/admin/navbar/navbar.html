@@ -21,13 +21,11 @@
         </a>
         }
 
+        <!-- Username -->
+        <p>Hi, {{ userName() }}</p>
+
         <!-- Logout -->
-        <button
-          (click)="logout()"
-          class="flex items-center gap-2 px-4 py-2 rounded-md bg-accent text-white text-sm font-medium hover:bg-accent/80 transition-colors"
-        >
-          Logout
-        </button>
+        <button (click)="logout()" matButton="outlined">Logout</button>
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -56,12 +54,7 @@
       </a>
       }
 
-      <button
-        (click)="logout()"
-        class="mx-4 mt-2 px-4 py-2 border border-border rounded-md text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
-      >
-        Logout
-      </button>
+      <button (click)="logout()" matButton="outlined">Logout</button>
     </nav>
     }
   </div>
