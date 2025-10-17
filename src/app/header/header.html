@@ -86,6 +86,9 @@
         >
 
         @if (user) {
+        <a routerLink="/reservations" routerLinkActive="text-primary" (click)="toggleMobileMenu()"
+          >MY RESERVATIONS</a
+        >
         <button
           (click)="toggleUserMobileMenu()"
           class="w-full flex justify-between items-center py-1"
