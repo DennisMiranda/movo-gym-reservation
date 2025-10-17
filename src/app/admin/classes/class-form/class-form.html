@@ -1,0 +1,74 @@
+<div
+  class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+>
+  <div class="bg-card border border-border rounded-lg w-full max-w-lg p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-heading text-foreground">
+        {{ classData ? 'Edit Class' : 'Add New Class' }}
+      </h2>
+    </div>
+
+    <!-- Form -->
+    <form #classForm="ngForm" (ngSubmit)="handleSubmit(classForm)" class="flex flex-col space-y-4">
+      <!-- Class Title -->
+      <mat-form-field appearance="outline" class="w-full !rounded-none">
+        <mat-label>Class Title</mat-label>
+        <input
+          matInput
+          id="title"
+          type="text"
+          name="title"
+          [value]="title()"
+          (input)="title.set($any($event.target).value)"
+          required
+          placeholder="e.g., Yoga Class"
+        />
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field appearance="outline" class="w-full !rounded-none">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          id="description"
+          name="description"
+          [value]="description()"
+          (input)="description.set($any($event.target).value)"
+          required
+          placeholder="e.g., Yoga Class Description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- Image -->
+      <mat-form-field appearance="outline" class="w-full !rounded-none">
+        <mat-label>Image</mat-label>
+        <input
+          matInput
+          id="image"
+          type="text"
+          name="image"
+          [value]="image()"
+          (input)="image.set($any($event.target).value)"
+          required
+          placeholder="e.g., https://example.com/image.jpg"
+        />
+      </mat-form-field>
+
+      <!-- Buttons -->
+      <div class="flex gap-3 pt-4">
+        <button matButton="outlined" type="button" (click)="handleClose()" class="flex-1">
+          Cancel
+        </button>
+
+        <button matButton="filled" type="submit" [disabled]="!classForm.valid" class="flex-1">
+          {{ classData ? 'Update Class' : 'Create Class' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

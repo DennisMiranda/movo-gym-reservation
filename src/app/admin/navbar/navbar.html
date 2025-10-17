@@ -1,0 +1,61 @@
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm"
+>
+  <div class="px-4 w-full">
+    <div class="flex items-center justify-between h-20 w-full">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center">
+        <h1 class="text-3xl font-black tracking-tight">MOVO</h1>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6">
+        @for (item of navItems; track $index) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="text-primary"
+          class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+          (click)="closeMenu()"
+        >
+          {{ item.label }}
+        </a>
+        }
+
+        <!-- Username -->
+        <p>Hi, {{ userName() }}</p>
+
+        <!-- Logout -->
+        <button (click)="logout()" matButton="outlined">Logout</button>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button
+        class="md:hidden text-muted-foreground hover:text-foreground text-2xl"
+        (click)="toggleMenu()"
+        aria-label="Toggle menu"
+      >
+        @if (!menuOpen()) { &#9776; } @else { &times; }
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (menuOpen()) {
+    <nav
+      class="md:hidden flex flex-col gap-3 py-4 border-t border-border bg-background/95 backdrop-blur-sm animate-slide-down"
+    >
+      @for (item of navItems; track $index) {
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="text-primary"
+        class="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+        (click)="closeMenu()"
+      >
+        {{ item.label }}
+      </a>
+      }
+
+      <button (click)="logout()" matButton="outlined">Logout</button>
+    </nav>
+    }
+  </div>
+</header>

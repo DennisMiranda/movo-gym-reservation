@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,10 +7,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
-  protected readonly title = signal('gym-app');
-
-  protected readonly items = [
-    // { title: 'Explore the Docs', link: 'https://angular.dev' },
-  ];
-}
+export class App {}

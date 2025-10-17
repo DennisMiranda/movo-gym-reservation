@@ -1,0 +1,229 @@
+@use 'tailwindcss';
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Define dark theme with Movo brand colors using Material 3
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$orange-palette,
+      tertiary: mat.$violet-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Apply dark theme
+html {
+  @include mat.all-component-themes($dark-theme);
+
+  // Override Material theme with Movo brand colors
+  --mat-app-background-color: hsl(0 0% 5%);
+  --mat-app-text-color: hsl(0 0% 96%);
+  --mat-app-surface-color: hsl(0 0% 8%);
+  --mat-sys-corner-none: 0;
+  --mat-sys-height-button: 36px;
+
+  // Material table specific overrides
+  .mat-mdc-table {
+    background-color: hsl(0 0% 8%);
+    color: hsl(0 0% 96%);
+  }
+
+  .mat-mdc-header-cell {
+    background-color: hsl(0 0% 12%);
+    color: hsl(0 0% 96%);
+    font-weight: 600;
+  }
+
+  .mat-mdc-row:hover {
+    background-color: hsl(0 0% 12%);
+  }
+
+  .mat-mdc-cell {
+    border-bottom-color: hsl(0 0% 20%);
+  }
+
+  @include mat.form-field-density(-4);
+
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: 1px,
+      outlined-outline-color: var(--color-border),
+    )
+  );
+
+  @include mat.button-overrides(
+    (
+      // Height
+      filled-container-height: var(--mat-sys-height-button),
+      outlined-container-height: var(--mat-sys-height-button),
+      text-container-height: var(--mat-sys-height-button),
+      // Shape
+      filled-container-shape: var(--mat-sys-corner-none),
+      outlined-container-shape: var(--mat-sys-corner-none),
+      text-container-shape: var(--mat-sys-corner-none),
+      // Colors
+      filled-container-color: var(--color-primary),
+      outlined-outline-color: var(--color-primary),
+      tonal-container-color: var(--color-primary),
+      //Text color|
+      filled-label-text-color: var(--color-foreground),
+      outlined-label-text-color: var(--color-primary),
+      text-label-text-color: var(--color-primary-foreground)
+    )
+  );
+
+  @include mat.icon-button-overrides(
+    (
+      container-shape: var(--mat-sys-corner-none),
+      icon-color: var(--color-foreground),
+    )
+  );
+
+  // @include mat.card-overrides(
+  //   (
+  //     outlined-container-color: var(--color-primary),
+  //     outlined-outline-color: var(--color-border),
+  //   )
+  // );
+}
+
+@theme {
+  /* Movo Brand Colors -  */
+  --color-background: hsl(0 0% 5%);
+  --color-foreground: hsl(0 0% 96%);
+
+  --color-card: hsl(0 0% 8%);
+  --color-card-foreground: hsl(0 0% 96%);
+
+  --color-popover: hsl(0 0% 8%);
+  --color-popover-foreground: hsl(0 0% 96%);
+
+  --color-primary: hsl(16 100% 60%);
+  --color-primary-foreground: hsl(0 0% 5%);
+
+  --color-secondary: hsl(0 0% 12%);
+  --color-secondary-foreground: hsl(0 0% 96%);
+
+  --color-muted: hsl(0 0% 15%);
+  --color-muted-foreground: hsl(0 0% 65%);
+
+  --color-accent: hsl(16 100% 60%);
+  --color-accent-foreground: hsl(0 0% 96%);
+
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(0 0% 96%);
+
+  --color-border: hsl(0 0% 20%);
+  --color-input: hsl(0 0% 20%);
+  --color-ring: hsl(16 100% 60%);
+
+  --radius: 0rem;
+
+  /* Typography */
+  --font-heading: 'Urbanist', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-accent: 'Playfair Display', serif;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(16 100% 60%), hsl(16 100% 50%));
+  --gradient-dark: linear-gradient(180deg, hsl(0 0% 5%), hsl(0 0% 8%));
+
+  /* Shadows */
+  --shadow-accent: 0 10px 40px -15px hsl(16 100% 60% / 0.4);
+  --shadow-card: 0 4px 20px -5px hsl(0 0% 0% / 0.5);
+
+  /* Transitions */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base styles */
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+
+.btn-accent {
+  border: 2px solid var(--color-primary);
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+}
+
+.btn-accent:hover {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  transition: all 0.3s ease-in-out;
+}
+
+main {
+  width: 100%;
+  min-height: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.content {
+  justify-content: space-around;
+  width: 100%;
+}
+
+@media screen and (max-width: 650px) {
+  /* .content {
+      flex-direction: column;
+      width: max-content;
+    } */
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Material + Tailwind fixes
+.mdc-notched-outline__notch {
+  border-style: none;
+}
+
+.mat-mdc-icon-button {
+  line-height: normal;
+}
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  background-color: var(--color-secondary);
+}
+
+.mat-mdc-form-field-infix {
+  z-index: 1;
+}

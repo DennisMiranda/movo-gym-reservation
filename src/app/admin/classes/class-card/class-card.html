@@ -1,0 +1,33 @@
+<mat-card
+  class="class-card border rounded-none h-90 hover:scale-102 transition-all"
+  appearance="outlined"
+>
+  <img
+    [routerLink]="['/admin/classes', classData?.id]"
+    class="h-60 cursor-pointer"
+    mat-card-image
+    src="{{ classData?.image }}"
+    alt="{{ classData?.title }}"
+  />
+  <mat-card-header class="justify-between items-center !pr-2">
+    <mat-card-title [routerLink]="['/admin/classes', classData?.id]" class="cursor-pointer">{{
+      classData?.title
+    }}</mat-card-title>
+    <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="openEditDialog()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="deleteClass()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="line-clamp-3">{{ classData?.description }}</p>
+  </mat-card-content>
+</mat-card>

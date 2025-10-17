@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, User } from '../services/auth/auth';
+import { AuthService } from '../services/auth/auth';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -12,15 +12,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.css',
 })
 export class Header {
-  mobileMenuOpen = false;
-  currentUser = signal<User | null>(null);
+  auth = inject(AuthService);
+  router = inject(Router);
 
-  constructor(private auth: AuthService, private router: Router) {
-    this.auth.currentUser$.subscribe((user) => {
-      console.log(user);
-      this.currentUser.set(user);
-    });
-  }
+  mobileMenuOpen = false;
+  currentUser = computed(() => this.auth.user());
 
   menuOpen = false;
 

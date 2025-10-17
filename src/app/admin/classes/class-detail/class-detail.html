@@ -1,0 +1,22 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="mb-8 flex items-center justify-between">
+    @if (classData$ | async; as classData) {
+    <div>
+      <h1 class="text-3xl font-heading text-foreground mb-2">{{ classData.title }}</h1>
+      <p class="text-muted-foreground">Create and manage your gym classes</p>
+    </div>
+    } @else {
+    <div>
+      <h1 class="text-3xl font-heading text-foreground mb-2">Loading...</h1>
+      <p class="text-muted-foreground">Loading class details...</p>
+    </div>
+    }
+
+    <button matButton="filled" (click)="openSessionForm()">
+      <mat-icon>add</mat-icon>Add Session
+    </button>
+  </div>
+  @if (classSessions$ | async; as classSessions) {
+  <app-class-sessions-table [data]="classSessions"></app-class-sessions-table>
+  }
+</div>

@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-3 mt-6 pt-6">
+  @if (events$ | async; as events) { @for (event of events; track event.id) {
+  <app-class-session-event [data]="event" [session]="session()"></app-class-session-event>
+  } @empty {
+  <div class="p-4 text-center text-gray-400">
+    <mat-icon class="text-gray-500">event_busy</mat-icon>
+    <p>No events scheduled</p>
+  </div>
+  } } @else {
+  <div class="flex items-center justify-center p-8">
+    <div class="flex flex-col items-center gap-2 text-gray-400">
+      <mat-icon class="animate-spin text-primary">refresh</mat-icon>
+      <span class="text-sm">Loading events...</span>
+    </div>
+  </div>
+  }
+</div>

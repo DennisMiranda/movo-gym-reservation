@@ -1,0 +1,35 @@
+@let event = data(); @let sessionData = session();
+
+<div
+  class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-black/30 rounded-sm"
+>
+  <div class="flex items-center gap-3">
+    <mat-icon class="text-primary">calendar_today</mat-icon>
+    <div>
+      <div class="font-semibold">{{ event.date.toDate() | date : 'MM/dd/yyyy' }}</div>
+      <div class="text-sm text-gray-400">
+        {{ sessionData.spots - event.spotsTaken }} spots available
+      </div>
+    </div>
+  </div>
+
+  <!-- Button -->
+  @if(!isReserved()) {
+  <button
+    (click)="reserve()"
+    matButton="filled"
+    [disabled]="sessionData.spots - event.spotsTaken === 0"
+    class="disabled:opacity-50"
+  >
+    <mat-icon>
+      {{ sessionData.spots - event.spotsTaken === 0 ? 'block' : 'check_circle' }}
+    </mat-icon>
+    {{ sessionData.spots - event.spotsTaken === 0 ? 'Full' : 'Reserve' }}
+  </button>
+  } @else {
+  <button matButton="filled" disabled>
+    <mat-icon>check_circle</mat-icon>
+    Joined
+  </button>
+  }
+</div>

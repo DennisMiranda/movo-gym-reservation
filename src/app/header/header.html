@@ -28,9 +28,16 @@
         {{ currentUser | json }}
 
         @if (user) {
+        <a
+          routerLink="/reservations"
+          routerLinkActive="text-primary"
+          class="text-sm font-medium hover:text-primary"
+        >
+          MY RESERVATIONS
+        </a>
 
         <div class="relative inline-block text-left">
-          <!-- Botón que abre el menú -->
+          <!-- Button to open the menu -->
           <button
             (click)="toggleMenu()"
             class="inline-flex items-center gap-2 px-4 py-2 rounded bg-accent text-white font-medium hover:bg-accent/80"
@@ -46,18 +53,10 @@
             </svg>
           </button>
           @if (menuOpen) {
-          <div
-            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-          >
-            <a
-              routerLink="/my-reservations"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-              My bookings
-            </a>
+          <div class="absolute right-0 mt-2 w-36 bg-black/50 backdrop-blur-sm rounded-sm z-50">
             <button
               (click)="logout()"
-              class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              class="w-full text-left px-4 py-2 text-sm text-white hover:bg-black cursor-pointer"
             >
               Logout
             </button>
@@ -98,14 +97,14 @@
         <!-- User Submenu -->
         @if (userMobileMenuOpen) {
         <div class="flex flex-col gap-2 mt-2 ml-2">
-          <a routerLink="/my-reservations" (click)="toggleMobileMenu()">
-            <button class="w-full border px-4 py-1 rounded">My bookings</button>
+          <a routerLink="/reservations" (click)="toggleMobileMenu()">
+            <button class="w-full border px-4 py-1">My reservations</button>
           </a>
-          <button (click)="logout()" class="w-full border px-4 py-1 rounded">Logout</button>
+          <button (click)="logout()" class="w-full border px-4 py-1">Logout</button>
         </div>
         } } @else {
         <a routerLink="/login" (click)="toggleMobileMenu()"
-          ><button class="w-full border px-4 py-1 rounded">Login / Sign up</button></a
+          ><button class="w-full border px-4 py-1">Login / Sign up</button></a
         >
         }
       </div>
