@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/gym-app",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -26,13 +27,11 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/custom-theme.scss",
-              "src/styles.scss"
-            ]
+            "styles": ["src/custom-theme.scss", "src/styles.scss"]
           },
           "configurations": {
             "production": {
+              "baseHref": "/movo-gym-reservation/",
               "budgets": [
                 {
                   "type": "initial",
@@ -87,10 +86,11 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
